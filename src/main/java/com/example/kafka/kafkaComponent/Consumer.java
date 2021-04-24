@@ -11,8 +11,14 @@ import org.springframework.stereotype.Service;
 public class Consumer {
     private final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
-    @KafkaListener(topics = "test-topic", groupId = "constant-reader")
-    public void consume(String message) throws IOException {
+    @KafkaListener(topics = "test-topic", groupId = "some_group1")
+    public void consume(String message) throws IOException, InterruptedException {
+        someWorkload();
         logger.info(String.format("#### -> Consumed message -> %s", message));
+    }
+
+    private void someWorkload() throws InterruptedException {
+        long millis = 2000;
+        Thread.sleep(millis);
     }
 }
