@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +13,7 @@ import org.springframework.stereotype.Service;
 public class Consumer {
     private final Logger logger = LoggerFactory.getLogger(Consumer.class);
 
-    @KafkaListener(topics = "test-topic", groupId = "some_group1")
+    @KafkaListener(id="${test.id}", topics = "${test.topic}", groupId = "some_group2")
     public void consume(String message) throws IOException, InterruptedException {
         someWorkload();
         logger.info(String.format("#### -> Consumed message -> %s", message));
